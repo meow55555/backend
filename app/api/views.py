@@ -1,7 +1,7 @@
 from hashlib import sha256
 from flask_restful import Resource, reqparse
 from flask import request
-from app.stl import add_key, del_connection
+from app.stl import add_key
 from app.database.helper import add_user, check_host, get_setting, get_user, update_user
 
 
@@ -57,7 +57,7 @@ class Login(Resource):
         password = sha256(data["password"].encode("utf-8")).hexdigest()
         key = data["key"]
         if password == get_setting("SERVER_PASS"):
-            token = add_user(key)
+            token = add_user(request.remote_addr, key)
             add_key(key)
             return {"status": "OK", "token": token}
         else:
@@ -86,7 +86,6 @@ class Connect(Resource):
         user = get_user({"token": token})[0]
         if user:
             update_user({"token": token}, {"active": False, "status": False})
-            del_connection(user["ssh_key"])
             return {"status": "OK"}
         else:
             return server_on_check("Invalid token.")

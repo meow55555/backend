@@ -1,4 +1,5 @@
 from hashlib import sha256
+import binascii
 from os import urandom
 import datetime
 from flask_sqlalchemy import SQLAlchemy
@@ -19,9 +20,10 @@ class Users(db.Model):
 
     @staticmethod
     def generate_token():
-        return urandom(32)
+        return binascii.b2a_hex(urandom(16)).decode("utf-8")
 
-    def __init__(self, ssh_key):
+    def __init__(self, ip, ssh_key):
+        self.ip = ip
         self.ssh_key = sha256(ssh_key.encode("utf-8")).hexdigest()
         self.token = self.generate_token()
 

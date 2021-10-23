@@ -43,7 +43,7 @@ def get_user(filter):
     ]
 
 
-def add_user(ssh_key):
+def add_user(ip, ssh_key):
     user = Users.query.filter_by(
         ssh_key=sha256(ssh_key.encode("utf-8")).hexdigest()
     ).first()
@@ -54,7 +54,7 @@ def add_user(ssh_key):
         )
         return token
     else:
-        user = Users(ssh_key)
+        user = Users(ip, ssh_key)
         db.session.add(user)
         db.session.commit()
         return user.token
