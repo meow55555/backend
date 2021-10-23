@@ -6,13 +6,13 @@
 <p>Server Status: {{ server_status }}</p>
 {% for con in connections %}
 <div>
-    <span>IP address: {{ con["ip"] }}</span>
-    <span>User Token: {{ con["token"] }}</span>
-    <span>SSH key: {{ con["ssh_key"] }}</span>
-    <span>User Active: {{ con["active"] }}</span>
-    <span>User Status: {{ con["status"] }}</span>
-    <span>Reconnect Times: {{ con["reconnect_times"] }}</span>
-    <span>Role: {{ con["role"] }}</span>
+    <div>IP address: {{ con["ip"] }}</div>
+    <div>User Token: {{ con["token"] }}</div>
+    <div>SSH key: {{ con["ssh_key"] }}</div>
+    <div>User Active: {{ con["active"] }}</div>
+    <div>User Status: {{ con["status"] }}</div>
+    <div>Reconnect Times: {{ con["reconnect_times"] }}</div>
+    <div>Role: {{ con["role"] }}</div>
 </div>
 {% endfor %}
 {% endblock %}

@@ -7,7 +7,7 @@ def init_db():
     db.create_all()
     set_setting("ADMIN_NAME", ADMIN_NAME)
     set_setting("ADMIN_PASSWORD", ADMIN_PASSWORD)
-    set_setting("SERVER_PASS", SERVER_PASSWORD)
+    set_setting("SERVER_PASSWORD", SERVER_PASSWORD)
     set_setting("SERVER_ON", True)
 
 
@@ -38,6 +38,7 @@ def get_user(filter):
             "connect_time": user.connect_time,
             "role": user.role,
             "active": user.active,
+            "status": user.status,
         }
         for user in users
     ]

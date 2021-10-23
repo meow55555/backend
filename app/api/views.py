@@ -25,7 +25,7 @@ class Status(Resource):
             parser.add_argument("mode")
             args = parser.parse_args()
             verbose = args["mode"] == "verbose"
-            connections = get_user()
+            connections = get_user({})
             if verbose:
                 status = [
                     {
