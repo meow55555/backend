@@ -12,6 +12,7 @@ class Users(db.Model):
     token = db.Column(db.String, unique=True, nullable=False)
     reconnect_times = db.Column(db.Integer, default=0)
     active = db.Column(db.Boolean, default=False)
+    message = db.Column(db.String)
 
     @staticmethod
     def generate_token():

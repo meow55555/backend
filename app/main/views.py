@@ -29,3 +29,4 @@ def login_page():
             for _, errors in form.errors.items():
                 for error in errors:
                     flash(error, category="alert")
+            return redirect(url_for("main.login_page"))
