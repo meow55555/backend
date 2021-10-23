@@ -15,6 +15,7 @@ class Users(db.Model):
     connect_time = db.Column(db.DateTime, default=datetime.datetime.now, nullable=False)
     role = db.Column(db.String, nullable=False, default="client") # host or client
     active = db.Column(db.Boolean, default=False)
+    status = db.Column(db.Boolean, default=False)
 
     @staticmethod
     def generate_token():

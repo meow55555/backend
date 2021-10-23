@@ -65,6 +65,7 @@ def update_user(filter, data):
     users.update(data)
     db.session.commit()
 
+
 def check_host():
     users = Users.query.filter_by(role="host").all()
     return bool(users)

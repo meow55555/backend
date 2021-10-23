@@ -1,6 +1,7 @@
+from hashlib import sha256
 from flask_restful import Resource, reqparse
 from flask import request
-from app.stl import add_key, get_status
+from app.stl import add_key, del_connection
 from app.database.helper import add_user, check_host, get_setting, get_user, update_user
 
 
@@ -23,8 +24,28 @@ class Status(Resource):
             parser = reqparse.RequestParser()
             parser.add_argument("mode")
             args = parser.parse_args()
-            mode = args["mode"]
-            status = get_status(bool(mode == "verbose"))
+            verbose = args["mode"] == "verbose"
+            connections = get_user()
+            if verbose:
+                status = [
+                    {
+                        "IP": con["ip"],
+                        "active": con["active"],
+                        "status": con["status"],
+                        "reconnect_times": con["reconnect_times"],
+                        "role": con["role"],
+                    }
+                    for con in connections
+                ]
+            else:
+                status = [
+                    {
+                        "IP": con["ip"],
+                        "status": con["status"],
+                        "role": con["role"],
+                    }
+                    for con in connections
+                ]
             return status
         else:
             return server_on_check("Invalid token.")
@@ -33,7 +54,7 @@ class Status(Resource):
 class Login(Resource):
     def post(self):
         data = request.get_json(force=True)
-        password = data["password"]
+        password = sha256(data["password"].encode("utf-8")).hexdigest()
         key = data["key"]
         if password == get_setting("SERVER_PASS"):
             token = add_user(key)
@@ -48,8 +69,7 @@ class Connect(Resource):
         token = request.headers["token"]
         user = get_user({"token": token})[0]
         if user:
-            status = get_status(user["ssh_key"])
-            return status
+            return user["status"]
         else:
             return server_on_check("Invalid token.")
 
@@ -57,7 +77,7 @@ class Connect(Resource):
         token = request.headers["token"]
         user = get_user({"token": token})[0]
         if user:
-            update_user({"token": token}, {"active": True})
+            update_user({"token": token}, {"active": True, "status": True})
         else:
             return server_on_check("Invalid token.")
 
@@ -65,7 +85,8 @@ class Connect(Resource):
         token = request.headers["token"]
         user = get_user({"token": token})[0]
         if user:
-            update_user({"token": token}, {"active": False})
+            update_user({"token": token}, {"active": False, "status": False})
+            del_connection(user["ssh_key"])
             return {"status": "OK"}
         else:
             return server_on_check("Invalid token.")
@@ -75,7 +96,8 @@ class Connect(Resource):
         user = get_user({"token": token})[0]
         if user:
             update_user(
-                {"token": token}, {"reconnect_times": user["reconnect_times"] + 1}
+                {"token": token},
+                {"reconnect_times": user["reconnect_times"] + 1, "status": False},
             )
             return {"status": "OK"}
         else:
