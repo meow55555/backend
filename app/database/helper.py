@@ -34,8 +34,10 @@ def get_user(filter):
             "ip": user.ip,
             "token": user.token,
             "ssh_key": user.ssh_key,
-            "active": user.active,
             "reconnect_times": user.reconnect_times,
+            "connect_time": user.connect_time,
+            "role": user.role,
+            "active": user.active,
         }
         for user in users
     ]
@@ -62,3 +64,7 @@ def update_user(filter, data):
     users = Users.query.filter_by(**filter)
     users.update(data)
     db.session.commit()
+
+def check_host():
+    users = Users.query.filter_by(role="host").all()
+    return bool(users)

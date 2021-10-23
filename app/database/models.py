@@ -1,5 +1,6 @@
 from hashlib import sha256
 from os import urandom
+import datetime
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -11,8 +12,9 @@ class Users(db.Model):
     ssh_key = db.Column(db.String, unique=True, nullable=False)
     token = db.Column(db.String, unique=True, nullable=False)
     reconnect_times = db.Column(db.Integer, default=0)
+    connect_time = db.Column(db.DateTime, default=datetime.datetime.now, nullable=False)
+    role = db.Column(db.String, nullable=False, default="client") # host or client
     active = db.Column(db.Boolean, default=False)
-    message = db.Column(db.String)
 
     @staticmethod
     def generate_token():

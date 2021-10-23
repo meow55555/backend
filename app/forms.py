@@ -10,3 +10,6 @@ class LoginForm(FlaskForm):
         "Password", validators=[DataRequired()], render_kw={"placeholder": "Password"}
     )
     submit = SubmitField("Login")
+
+class InstallPluginForm(FlaskForm):
+    pass
