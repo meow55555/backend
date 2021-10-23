@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<p>Server Status: {{ server_status }}</p>
+{% for con in connections %}
+<div>
+    <span>IP address: {{ con["ip"] }}</span>
+    <span>User Token: {{ con["token"] }}</span>
+    <span>SSH key: {{ con["ssh_key"] }}</span>
+    <span>User Active: {{ con["active"] }}</span>
+    <span>Reconnect Times: {{ con["reconnect_times"] }}</span>
+</div>
+{% endfor %}
+{% endblock %}
