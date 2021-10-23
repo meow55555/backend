@@ -4,8 +4,8 @@ from ..database.helper import get_setting, get_user
 from . import admin_bp
 
 
-@login_required
 @admin_bp.route("/dashboard", methods=["GET"])
+@login_required
 def dashboard_page():
     server_status = get_setting("SERVER_ON")
     connections = get_user({"active": True})
@@ -14,7 +14,7 @@ def dashboard_page():
     )
 
 
-@login_required
 @admin_bp.route("/dashboard/plugins", methods=["GET", "POST"])
+@login_required
 def plugins_page():
     pass

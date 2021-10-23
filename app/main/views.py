@@ -22,7 +22,9 @@ def login_page():
         if form.validate_on_submit():
             if check_password(form.username.data, form.password.data):
                 return redirect(url_for("admin.dashboard_page"))
-            return redirect(url_for("main.login_page"))
+            else:
+                flash("Wrong username or password", category="alert")
+                return redirect(url_for("main.login_page"))
         else:
             for _, errors in form.errors.items():
                 for error in errors:
