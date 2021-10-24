@@ -104,7 +104,6 @@ def install_plugin_page(directory):
             flash("The plugin is not found, you can try to add it.", category="alert")
             return redirect(url_for("admin.add_plugin_page"))
         else:
-            print(request.form)
             # write config
             for k, v in request.form.items():
                 f.write(f'{k} = "{v}"\n')

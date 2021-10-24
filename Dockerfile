@@ -11,6 +11,7 @@ ENV FLASK_ENV=production
 ENV DATABASE_URI="sqlite:///data.db"
 
 RUN pip3 install -r requirements.txt
+RUN apt-get update && apt-get install git
 
 EXPOSE 8080
 
