@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Plugins{% endblock %}
+
+{% block content %}
+<form action="/dashboard/plugins/add" method="post">
+    {{ form.csrf_token }}
+    {{ form.url }}
+    {{ form.submit }}
+</form>
+{% endblock %}

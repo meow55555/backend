@@ -14,8 +14,11 @@ class LoginForm(FlaskForm):
     submit = SubmitField("Login")
 
 
-class InstallPluginForm(FlaskForm):
-    pass
+class AddPluginForm(FlaskForm):
+    url = StringField(
+        "URL", validators=[DataRequired()], render_kw={"placeholder": "URL of repo"}
+    )
+    submit = SubmitField("Add")
 
 
 class ServerSettingForm(FlaskForm):

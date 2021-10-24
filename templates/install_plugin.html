@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Plugins{% endblock %}
+
+{% block content %}
+<form action="/dashboard/plugins/install/{{ directory }}" method="post">
+    {% for config in configs %}
+    <input type="text" placeholder="{{ config }}" name="{{ config }}" required>
+    {% endfor %}
+    <input type="submit" value="Install">
+</form>
+{% endblock %}
