@@ -3,6 +3,8 @@ FROM python:3.9.7-buster
 WORKDIR /app
 
 ADD . /app
+ADD https://raw.githubusercontent.com/meow55555/stl/main/dist/stl-linux-amd64 /usr/local/bin/stl
+RUN chmod a+x /usr/local/bin/stl
 
 ENV FLASK_APP=manage
 ENV FLASK_ENV=production
