@@ -9,7 +9,7 @@ class LoginForm(FlaskForm):
         "Username", validators=[DataRequired()], render_kw={"placeholder": "Username"}
     )
     password = PasswordField(
-        "Password", validators=[DataRequired()], render_kw={"placeholder": "Username"}
+        "Password", validators=[DataRequired()], render_kw={"placeholder": "Password"}
     )
     submit = SubmitField("Login")
 

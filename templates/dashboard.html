@@ -5,14 +5,14 @@
 {% block content %}
 <p>Server Status: {{ server_status }}</p>
 {% for con in connections %}
-<div>
-    <div>IP address: {{ con["ip"] }}</div>
-    <div>User Token: {{ con["token"] }}</div>
-    <div>SSH key: {{ con["ssh_key"] }}</div>
-    <div>User Active: {{ con["active"] }}</div>
-    <div>User Status: {{ con["status"] }}</div>
-    <div>Reconnect Times: {{ con["reconnect_times"] }}</div>
-    <div>Role: {{ con["role"] }}</div>
+<div class="card">
+    <div><b>IP address:</b> {{ con["ip"] }}</div>
+    <div><b>User Token:</b> {{ con["token"] }}</div>
+    <div><b>SSH key:</b> {{ con["ssh_key"] }}</div>
+    <div><b>User Active:</b> {{ con["active"] }}</div>
+    <div><b>User Status:</b> {{ con["status"] }}</div>
+    <div><b>Reconnect Times:</b> {{ con["reconnect_times"] }}</div>
+    <div><b>Role:</b> {{ con["role"] }}</div>
 </div>
 {% endfor %}
 {% endblock %}

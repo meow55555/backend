@@ -3,8 +3,10 @@
 {% block title %}Plugins{% endblock %}
 
 {% block content %}
-<a href="/dashboard/plugins/add">Add</a>
-{% for plugin in plugins %}
-<div><a href="/dashboard/plugins/install/{{ plugin }}">{{ plugin }}</a></div>
-{% endfor %}
+<button class="add"><a href="/dashboard/plugins/add">Add</a></button>
+<div>
+    {% for plugin in plugins %}
+    <div><a href="/dashboard/plugins/install/{{ plugin }}">{{ plugin }}</a></div>
+    {% endfor %}
+</div>
 {% endblock %}

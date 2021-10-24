@@ -2,12 +2,43 @@ body {
     background-image: linear-gradient(to left top, #f4ffad, #e1ffb9, #d0ffc6, #c2ffd3, #b9ffe0);    background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    font-family: 'Roboto', sans-serif;
 }
 
 main {
     min-height: 100vh;
 }
 
+nav {
+    height: 40px;
+}
+
+nav a {
+    color: black;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
 footer {
     text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 90vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    width: max-content;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 5px 5px 10px grey;
 }

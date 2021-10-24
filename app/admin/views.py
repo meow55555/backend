@@ -70,7 +70,7 @@ def add_plugin_page():
             if system(f"git clone {form.url.data} plugins/{directory}") == 0:
                 return redirect(f"/dashboard/plugins/install/{directory}")
             else:
-                flash("Something went wrong, please try again.")
+                flash("Something went wrong, please try again.", category="alert")
         else:
             for _, errors in form.errors.items():
                 for error in errors:
@@ -85,7 +85,7 @@ def install_plugin_page(directory):
         try:
             f = open(f"plugins/{directory}/config.py")
         except FileNotFoundError:
-            flash("The plugin is not found, you can try to add it.")
+            flash("The plugin is not found, you can try to add it.", category="alert")
             return redirect(url_for("admin.add_plugin_page"))
         else:
             configs = []
@@ -101,7 +101,7 @@ def install_plugin_page(directory):
         try:
             f = open(f"plugins/{directory}/config.py", "w")
         except FileNotFoundError:
-            flash("The plugin is not found, you can try to add it.")
+            flash("The plugin is not found, you can try to add it.", category="alert")
             return redirect(url_for("admin.add_plugin_page"))
         else:
             print(request.form)
