@@ -1,4 +1,5 @@
 from hashlib import sha256
+import datetime
 from flask_restful import Resource, reqparse
 from flask import request
 from app.stl import add_key
@@ -40,6 +41,7 @@ class Status(Resource):
                         "status": con["status"],
                         "reconnect_times": con["reconnect_times"],
                         "role": con["role"],
+                        "uptime": (datetime.datetime.now() - connections[0]["connect_time"]).total_seconds(),
                     }
                     for con in connections
                 ]
