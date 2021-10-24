@@ -7,14 +7,11 @@ api = Api(api_bp)
 
 
 @api_bp.before_request
-def authentication():
+def check_token():
     # do simple check for token
     if request.path != "/api/login":
         token = request.headers.get("Authorization", None)
-        if token and token.startswith("Bearer"):
-            request.headers["token"] = token.split()[1]
-            # keep processing
-        else:
+        if not (token and token.startswith("Bearer")):
             return {"status": "fail", "message": "Invalid token."}, 401
 
 

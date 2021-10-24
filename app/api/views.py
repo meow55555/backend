@@ -5,6 +5,12 @@ from app.stl import add_key
 from app.database.helper import add_user, check_host, get_setting, get_user, update_user
 
 
+def get_token():
+    # It is sure that the token format is valid.
+    token = request.headers.get("Authorization", None)
+    return token.split()[1]
+
+
 def server_on_check(msg):
     server_on = get_setting("SERVER_ON")
     if server_on:
@@ -18,7 +24,7 @@ def server_on_check(msg):
 
 class Status(Resource):
     def get(self):
-        token = request.headers["token"]
+        token = get_token()
         user = get_user({"token": token})[0]
         if user:
             parser = reqparse.RequestParser()
@@ -66,23 +72,24 @@ class Login(Resource):
 
 class Connect(Resource):
     def get(self):
-        token = request.headers["token"]
+        token = get_token()
         user = get_user({"token": token})[0]
         if user:
-            return user["status"]
+            return {"status": "OK" if user["status"] else "Failed"}
         else:
             return server_on_check("Invalid token.")
 
     def post(self):
-        token = request.headers["token"]
+        token = get_token()
         user = get_user({"token": token})[0]
         if user:
             update_user({"token": token}, {"active": True, "status": True})
+            return {"status": "OK"}
         else:
             return server_on_check("Invalid token.")
 
     def delete(self):
-        token = request.headers["token"]
+        token = get_token()
         user = get_user({"token": token})[0]
         if user:
             update_user({"token": token}, {"active": False, "status": False})
@@ -91,7 +98,7 @@ class Connect(Resource):
             return server_on_check("Invalid token.")
 
     def put(self):
-        token = request.headers["token"]
+        token = get_token()
         user = get_user({"token": token})[0]
         if user:
             update_user(
@@ -105,7 +112,7 @@ class Connect(Resource):
 
 class Host(Resource):
     def post(self):
-        token = request.headers["token"]
+        token = get_token()
         user = get_user({"token": token})[0]
         if user:
             if user["active"]:
@@ -123,7 +130,7 @@ class Host(Resource):
             return server_on_check("Invalid token.")
 
     def delete(self):
-        token = request.headers["token"]
+        token = get_token()
         user = get_user({"token": token})[0]
         if user:
             if user["role"] == "host":
